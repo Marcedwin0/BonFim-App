@@ -1,4 +1,4 @@
 # RottenTomatoesDemo
-Box Office films
+App Movie
 
 <img src = "Gif.gif"></img>
