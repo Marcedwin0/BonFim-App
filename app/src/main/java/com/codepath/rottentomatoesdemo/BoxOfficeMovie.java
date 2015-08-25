@@ -9,9 +9,7 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by install on 12/07/2015.
- */
+
 public class BoxOfficeMovie implements Serializable {
     private String title;
     private int year;
@@ -23,6 +21,7 @@ public class BoxOfficeMovie implements Serializable {
 
     private String largePosterUrl;
     private String criticsConsensus;
+    private String alternate;
     private int audienceScore;
 
 
@@ -35,6 +34,8 @@ public class BoxOfficeMovie implements Serializable {
     public String getCriticsConsensus() {
         return criticsConsensus;
     }
+
+    public String getAlternate(){ return alternate; }
 
     public int getAudienceScore() {
         return audienceScore;
@@ -81,6 +82,7 @@ public class BoxOfficeMovie implements Serializable {
             b.largePosterUrl = jsonObject.getJSONObject("posters").getString("detailed");
             b.criticsConsensus = jsonObject.getString("critics_consensus");
             b.audienceScore = jsonObject.getJSONObject("ratings").getInt("audience_score");
+            b.alternate = jsonObject.getJSONObject("links").getString("alternate");
             JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");
             for (int i = 0; i < abridgedCast.length(); i++) {
                 b.castList.add(abridgedCast.getJSONObject(i).getString("name"));

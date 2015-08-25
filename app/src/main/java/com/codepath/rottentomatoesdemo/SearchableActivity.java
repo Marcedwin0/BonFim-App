@@ -1,19 +1,28 @@
 package com.codepath.rottentomatoesdemo;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ListView;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -26,9 +35,101 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class SearchableActivity extends AppCompatActivity {
+
+    private GridView lvMovies;
+    private BoxOfficeMoviesAdapter adapterMovies;
+    public static final String MOVIE_DETAIL_KEY = "movie";
+    private RottenTomatoesClient client;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle extras = getIntent().getExtras();
+        if(extras == null){ return; }
+        String mq = extras.getString("myQuery");
+        setContentView(R.layout.activity_searchable);
+        lvMovies = (GridView) findViewById(R.id.lvMovies);
+        ArrayList<BoxOfficeMovie> aMovies = new ArrayList<BoxOfficeMovie>();
+        adapterMovies = new BoxOfficeMoviesAdapter(this, aMovies);
+        lvMovies.setAdapter(adapterMovies);
+        fetchSearchQuery(mq);
+        setupMovieSelectedListener();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setLogo(R.mipmap.ic_movie);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+    }
+
+    public void setupMovieSelectedListener() {
+        lvMovies.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View item, int position, long rowId) {
+                // Launch the detail view passing movie as an extra
+                Intent i = new Intent(SearchableActivity.this, BoxOfficeDetailActivity.class);
+                i.putExtra(MOVIE_DETAIL_KEY, adapterMovies.getItem(position));
+                startActivity(i);
+            }
+        });
+    }
+
+    private void fetchSearchQuery(String query) {
+        client = new RottenTomatoesClient();
+        client.setCustomQuery(query);
+        client.getMoviesFromSearch(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject responseBody) {
+                JSONArray items = null;
+                int i = 1;
+                try {
+                    // Get the movies json array
+                    items = responseBody.getJSONArray("movies");
+                    // Parse json array into array of model objects
+                    ArrayList<BoxOfficeMovie> movies = BoxOfficeMovie.fromJson(items);
+                    // Load model objects into the adapter
+                    for (BoxOfficeMovie movie : movies) {
+                        i++;
+                        Log.d("fetch", Integer.toString(i));
+                        adapterMovies.add(movie); // add movie through the adapter
+                    }
+                    adapterMovies.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_box_office, menu);
+        /* search menu button
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // perform query here
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });*/
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+
+}
+    /*
     // the Rotten Tomatoes API key of your application! get this from their website
     private final String API_KEY = "9htuhtcb4ymusd73d4z6jxcj";
 
@@ -160,3 +261,4 @@ public class SearchableActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+*/

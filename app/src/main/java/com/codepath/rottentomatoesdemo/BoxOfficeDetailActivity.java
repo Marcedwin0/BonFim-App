@@ -27,6 +27,7 @@ public class BoxOfficeDetailActivity extends AppCompatActivity {
     private TextView tvAudienceScore;
     private TextView tvCriticsScore;
     private TextView tvCriticsConsensus;
+    private BoxOfficeMovie m;
     private ShareActionProvider mShareActionProvider;
 
 
@@ -56,6 +57,7 @@ public class BoxOfficeDetailActivity extends AppCompatActivity {
     // Populate the data for the movie
     public void loadMovie(BoxOfficeMovie movie) {
         // Populate data
+        m = movie;
         tvTitle.setText(Html.fromHtml("<b></b> " + (movie.getTitle())));
         tvTrailer.setText(Html.fromHtml("<b>Official Trailer:</b> " + (movie.getTitle())));
         tvCriticsScore.setText(Html.fromHtml("<b>Critics Score:</b> " + movie.getCriticsScore() + "%"));
@@ -90,7 +92,7 @@ public class BoxOfficeDetailActivity extends AppCompatActivity {
     private Intent getDefaultIntent() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, "text to share");
+        intent.putExtra(Intent.EXTRA_TEXT, m.getAlternate());
         mShareActionProvider.setShareIntent(intent);
         return intent;
     }

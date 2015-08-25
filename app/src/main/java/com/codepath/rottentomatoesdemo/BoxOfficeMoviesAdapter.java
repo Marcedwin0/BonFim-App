@@ -12,9 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by install on 12/07/2015.
- */
+
 public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
     public BoxOfficeMoviesAdapter(Context context, ArrayList<BoxOfficeMovie> aMovies) {
         super(context, 0, aMovies);
@@ -32,14 +30,14 @@ public class BoxOfficeMoviesAdapter extends ArrayAdapter<BoxOfficeMovie> {
             convertView = inflater.inflate(R.layout.item_box_office_movie, parent, false);
         }
         // Lookup views within item layout
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-        TextView tvCriticsScore = (TextView) convertView.findViewById(R.id.tvCriticsScore);
-        TextView tvCast = (TextView) convertView.findViewById(R.id.tvCast);
+        //TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+        //TextView tvCriticsScore = (TextView) convertView.findViewById(R.id.tvCriticsScore);
+        //TextView tvCast = (TextView) convertView.findViewById(R.id.tvCast);
         ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImage);
         // Populate the data into the template view using the data object
-        tvTitle.setText(movie.getTitle());
-        tvCriticsScore.setText("Score: " + movie.getCriticsScore() + "%");
-        tvCast.setText(movie.getCastList());
+        //tvTitle.setText(movie.getTitle());
+        //tvCriticsScore.setText("Score: " + movie.getCriticsScore() + "%");
+        //tvCast.setText(movie.getCastList());
         Picasso.with(getContext()).load(movie.getPosterUrl()).into(ivPosterImage);
         // Return the completed view to render on screen
         return convertView;

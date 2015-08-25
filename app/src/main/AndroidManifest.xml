@@ -37,6 +37,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Tab" />
+        <activity
+            android:name=".UpcomingActivity"
+            android:label="@string/title_activity_upcoming" >
+        </activity>
     </application>
 
 </manifest>
