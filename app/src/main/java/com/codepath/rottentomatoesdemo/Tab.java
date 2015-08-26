@@ -26,15 +26,18 @@ public class Tab extends TabActivity {
 /** tid1 is firstTabSpec Id. Its used to access outside. */
         TabSpec firstTabSpec = tabHost.newTabSpec("tid1");
         TabSpec secondTabSpec = tabHost.newTabSpec("tid1");
+        TabSpec thirdTabSpec = tabHost.newTabSpec("tid1");
 
 /** TabSpec setIndicator() is used to set name for the tab. */
 /** TabSpec setContent() is used to set content for a particular tab. */
-        firstTabSpec.setIndicator("Box Office").setContent(new Intent(this,BoxOfficeActivity.class));
-        secondTabSpec.setIndicator("Coming Soon").setContent(new Intent(this,UpcomingActivity.class));
+        firstTabSpec.setIndicator("Bon Fim").setContent(new Intent(this,BoxOfficeActivity.class));
+        secondTabSpec.setIndicator("Byento").setContent(new Intent(this,UpcomingActivity.class));
+        thirdTabSpec.setIndicator("Sinema").setContent(new Intent(this,In_TheatersActivity.class));
 
 /** Add tabSpec to the TabHost to display. */
         tabHost.addTab(firstTabSpec);
         tabHost.addTab(secondTabSpec);
+        tabHost.addTab(thirdTabSpec);
 
     }
 }

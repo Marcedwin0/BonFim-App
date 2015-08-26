@@ -42,6 +42,10 @@
             android:name=".UpcomingActivity"
             android:label="@string/title_activity_upcoming" >
         </activity>
+        <activity
+            android:name=".In_TheatersActivity"
+            android:label="@string/title_activity_in__theaters" >
+        </activity>
     </application>
 
 </manifest>

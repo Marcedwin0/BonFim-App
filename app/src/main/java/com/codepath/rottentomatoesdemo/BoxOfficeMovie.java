@@ -80,7 +80,7 @@ public class BoxOfficeMovie implements Serializable {
             // Construct simple array of cast names
             b.castList = new ArrayList<String>();
             b.largePosterUrl = jsonObject.getJSONObject("posters").getString("detailed");
-            b.criticsConsensus = jsonObject.getString("critics_consensus");
+            b.criticsConsensus = "";
             b.audienceScore = jsonObject.getJSONObject("ratings").getInt("audience_score");
             b.alternate = jsonObject.getJSONObject("links").getString("alternate");
             JSONArray abridgedCast = jsonObject.getJSONArray("abridged_cast");

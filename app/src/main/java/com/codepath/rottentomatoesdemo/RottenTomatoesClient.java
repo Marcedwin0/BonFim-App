@@ -38,23 +38,18 @@ public class RottenTomatoesClient {
 
     private String getCustomQuery() { return myQuery; }
 
-   /* public void getInTheatersMovies(JsonHttpResponseHandler handler) {
-        String url = getApiUrl("lists/movies/in_theaters.json");
-        RequestParams params = new RequestParams("apikey", API_KEY);
-        client.get(url, params, handler);
-    }*/
-
-     public void getUpcomingMovies(JsonHttpResponseHandler handler) {
-        String url = getApiUrl("lists/movies/upcoming.json?apikey="+ API_KEY);
+    public void getInTheatersMovies(JsonHttpResponseHandler handler) {
+        String url = getApiUrl("lists/movies/in_theaters.json?apikey="+ API_KEY);
         RequestParams params = new RequestParams("apikey", API_KEY);
         client.get(url, params, handler);
     }
 
-   /*public void getMovies(JsonHttpResponseHandler handler) {
-        String url = getApiUrl("movies.json");
+     public void getUpcomingMovies(JsonHttpResponseHandler handler) {
+        String url = getApiUrl("lists/movies/upcoming.json?apikey="+ API_KEY + "&page_limit=16");
         RequestParams params = new RequestParams("apikey", API_KEY);
         client.get(url, params, handler);
-    } */
+    }
+
 
 
 }
